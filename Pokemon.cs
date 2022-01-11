@@ -22,6 +22,9 @@ public class Pokemon
     private int ATK;
     private int DEF;
     private int LFE;
+
+    public static void print() => Console.WriteLine("pokemon");
+        
     public Pokemon(string name, string weight, string height, Region habitat, Pokemon? envolvesTo, string type, string[] moves, int atk, int def, int lfe)
     {
         Name = name;

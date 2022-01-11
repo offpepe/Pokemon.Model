@@ -13,7 +13,6 @@ public class Trainer
         TrainerID = Guid.NewGuid().ToString("N");
         
     }
-
     public Pokemon PokeComrate { get; set; }
 
     public Item[] Bag { get; set; }
@@ -31,4 +30,10 @@ public class Trainer
                                                    $"START JOURNEY IN {StartZone}\n" +
                                                    $"HAS AS COMRATE {PokeComrate}\n" +
                                                    $"HIS POKES -> {Pokes}");
+
+    public void whatIsAcomrate()
+    {
+        Pokemon.print();
+    }
+    
 }
