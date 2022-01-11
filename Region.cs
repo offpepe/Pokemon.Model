@@ -6,6 +6,7 @@ public class Region
     public Region(string name, string[] settlements, int population)
     {
         Name = name;
+        
         Settlements = settlements;
         Population = population;
         _id += 1;

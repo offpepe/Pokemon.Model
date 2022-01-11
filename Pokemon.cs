@@ -3,14 +3,26 @@ using System.Threading.Channels;
 
 namespace Pokedex.model;
 
+/// <summary>
+/// Gera a classe que descreve um pokemon
+/// </summary>
+/// <param name="name"> Recebe uma string com o nome do pokemon</param>
+/// <param name="weight">Recebe uma string com o peso e a unidade de medida (kg, g, dg e etc)</param>
+/// <param name="height">Recebe uma string com a altura e a unidade de medida (m, cm, mm)</param>
+/// <param name="habitat">Recebe uma classe do tipo <see cref="Region"/> que descreve o local onde o pokemon habita</param>
+/// <param name="envolvesTo">Recebe uma classe do tipo <see cref="Pokemon"/> que descreve a evoluçao deste pokemon</param>
+/// <param name="type">Recebe uma string que decreve o tipo do pokemon</param>
+/// <param name="moves">recebe um array de strings que descreve os movimentos desse pokemon</param>
+/// <param name="atk">Recebe um inteiro com o poder de ataque deste pokemon</param>
+/// <param name="def">Recebe um inteiro com a defesa deste pokemon</param>
+/// <param name="lfe">Recebe um inteiro com a quantidade de vida deste pokemon</param>
 public class Pokemon
 {
     private static int _pokeId;
     private int ATK;
     private int DEF;
     private int LFE;
-
-    public Pokemon(string name, string weight, string height, Region habitat, Pokemon envolvesTo, string type, string[] moves, int atk, int def, int lfe)
+    public Pokemon(string name, string weight, string height, Region habitat, Pokemon? envolvesTo, string type, string[] moves, int atk, int def, int lfe)
     {
         Name = name;
         Weight = weight;
@@ -32,7 +44,7 @@ public class Pokemon
 
     public int Id { get; }
 
-    public Pokemon EnvolvesTo { get; set; }
+    public Pokemon? EnvolvesTo { get; set; }
 
     public Region Habitat { get; }
 
@@ -44,14 +56,19 @@ public class Pokemon
 
     public void Talk() => Console.WriteLine($"{Name}...{Name}..{Name}");
 
-    public void Profile() => Console.WriteLine($"{Name}#{Id}[EVO:::{EnvolvesTo.Name} ----> {PokeType}\n" +
+    public string Stats() => $"ATK => {ATK}\nDEF => {DEF}\nLFE => {LFE}"; 
+
+    public void Profile() => Console.WriteLine($"{Name}#{Id} ----> {PokeType}\n" +
                                                $"Height: {Height} | Weight: {Weight}\n" +
-                                               $"Habitat -> {Habitat.Name}" +
+                                               $"Habitat -> {Habitat.Name}\n" +
                                                $"ATK ::: {ATK}\n" +
                                                $"DEF ::: {DEF}\n" +
-                                               $"LFE ::: {LFE}\n" +
-                                               $"MOVES ==> {Moves}");
-
+                                               $"LFE ::: {LFE}\n");
+    /// <summary>
+    /// Faz uma batalha simulada.
+    /// </summary>
+    /// <param name="opponent"> Deve ser da classe do tipo <see cref="Pokemon"/></param>
+    /// <exception cref="ArgumentException">Os pokemons devem ter vida maior que zero</exception>
     public void BasicBattle(Pokemon opponent)
     {
         int BTL_LFE = this.LFE;
@@ -64,15 +81,25 @@ public class Pokemon
                 BTL_LFE -= opponent.ATK - DEF;
             } while (BTL_LFE > 0 || OPT_LFE > 0);
 
-            string winner = BTL_LFE == 0 ? opponent.Name : this.Name;
+            string winner = BTL_LFE == 0 ? this.Name : opponent.Name;
             Console.WriteLine($"{winner} won!");
         }
         else
         {
-            Console.WriteLine($"Some pokemon can't battle, go to the near poke clinic...");
+            var invalidLife = BTL_LFE > 0 ? opponent.Name : this.Name;
+            throw new ArgumentException("O pokemon precisa ter vida maior que 0", invalidLife);
         }
     }
 
-    public void Evolve() => Console.WriteLine($"TANANANANANANAN > > > > > {Name} have evolved to {EnvolvesTo.Name} ");
+    public void Evolve() {
+        if (this.EnvolvesTo != null)
+        {
+            Console.WriteLine($"TANANANANANANAN > > > > > {Name} have evolved to {EnvolvesTo.Name}");
+        }
+        else
+        {
+            Console.WriteLine("Este pokemon não evolui");
+        }
+    }
 
 }

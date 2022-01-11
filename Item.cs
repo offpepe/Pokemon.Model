@@ -2,6 +2,15 @@ namespace Pokedex.model
 {
     public abstract class Item
     {
+        /// <summary>
+        /// Item 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="price"></param>
+        /// <param name="qtd"></param>
+        /// <param name="description"></param>
+        /// <param name="recover"></param>
+        /// <param name="pts"></param>
         public Item(string name, double price, int qtd, string description, string recover, int pts)
         {
             Name = name;

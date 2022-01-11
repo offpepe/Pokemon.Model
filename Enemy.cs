@@ -2,7 +2,7 @@ namespace Pokedex.model;
 
 public abstract class Enemy
 {
-    public Enemy(string name, string team, double defeatReward, Item itemDropped)
+    public Enemy(string name, Team team, double defeatReward, Item itemDropped)
     {
         Name = name;
         Team = team;
@@ -14,7 +14,7 @@ public abstract class Enemy
 
     public double DefeatReward { get; set; }
 
-    public string Team { get; set; }
+    public Team Team { get; set; }
 
     public string Name { get; set; }
 }
